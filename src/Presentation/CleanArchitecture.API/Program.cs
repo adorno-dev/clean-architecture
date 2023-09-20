@@ -1,5 +1,13 @@
+using CleanArchitecture.Application.Extensions;
+using CleanArchitecture.Persistence.Extensions;
+using CleanArchitecture.API.Extensions;
+
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.ConfigurePersistence(builder.Configuration);
+builder.Services.ConfigureApplication();
+
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -12,6 +20,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.CreateDatabase();
 app.UseHttpsRedirection();
 app.MapControllers();
 app.Run();
